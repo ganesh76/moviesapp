@@ -19,6 +19,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:clickable="true"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -35,9 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:id="@+id/movieItem"
-            android:clickable="true"
             android:layout_width="match_parent">
-
             <ImageView
                 android:id="@+id/movieImageView"
                 android:layout_width="100dp"

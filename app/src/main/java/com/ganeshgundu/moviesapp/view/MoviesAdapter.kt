@@ -33,14 +33,13 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-class MoviesAdapter :
+class MoviesAdapter constructor(private val mListener: (MovieResult) -> Unit):
     ListAdapter<MovieResult, MoviesAdapter.MoviesViewHolder>(DiffCallback) {
-    private lateinit var movieClickListener: MovieClickListener
 
     class MoviesViewHolder(
         private var binding: MoviesListViewItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MovieResult) {
+        fun bind(data: MovieResult, mListener: (MovieResult) -> Unit) {
             binding.movieTitleTextView.text = data.title
             binding.movieOverview.text = data.overView
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -52,7 +51,9 @@ class MoviesAdapter :
                 .apply(requestOptions)
                 .into(binding.movieImageView)
             binding.movieImageView.adjustViewBounds = true
-            //clickListener
+            binding.movieItem.setOnClickListener {
+               mListener.invoke(data)
+            }
         }
     }
 
@@ -64,10 +65,6 @@ class MoviesAdapter :
         override fun areContentsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
             return oldItem.id == newItem.id
         }
-    }
-
-    fun setClickListener(clickListener: MovieClickListener) {
-        movieClickListener = clickListener
     }
 
 
@@ -85,10 +82,6 @@ class MoviesAdapter :
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data)
-    }
-
-    interface MovieClickListener {
-        fun onMovieItemClicked(newItem: MovieResult)
+        holder.bind(data,mListener)
     }
 }

@@ -83,6 +83,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 tools:text="Test exp" />
 
+
+
             <TextView
                 android:id="@+id/overview"
                 android:layout_width="match_parent"
@@ -90,18 +92,15 @@
                 android:layout_below="@+id/popularity"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_toRightOf="@+id/movieImageView"
-                android:ellipsize="end"
-                android:maxLines="2"
                 android:gravity="left|center"
                 android:paddingBottom="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 tools:text="Test exp" />
 
 
-
-
         </RelativeLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
