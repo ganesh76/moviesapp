@@ -28,12 +28,17 @@ import com.ganeshgundu.moviesapp.BuildConfig
 import com.ganeshgundu.moviesapp.R
 import com.ganeshgundu.moviesapp.api.MovieResult
 import com.ganeshgundu.moviesapp.databinding.MoviesListViewItemBinding
+import com.ganeshgundu.nasaapod.network.MoviesApiData
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 class MoviesAdapter :
     ListAdapter<MovieResult, MoviesAdapter.MoviesViewHolder>(DiffCallback) {
+    private lateinit var movieClickListener: MovieClickListener
 
     class MoviesViewHolder(
-        private var binding: MoviesListViewItemBinding
+        private var binding: MoviesListViewItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MovieResult) {
             binding.movieTitleTextView.text = data.title
@@ -47,6 +52,7 @@ class MoviesAdapter :
                 .apply(requestOptions)
                 .into(binding.movieImageView)
             binding.movieImageView.adjustViewBounds = true
+            //clickListener
         }
     }
 
@@ -58,6 +64,10 @@ class MoviesAdapter :
         override fun areContentsTheSame(oldItem: MovieResult, newItem: MovieResult): Boolean {
             return oldItem.id == newItem.id
         }
+    }
+
+    fun setClickListener(clickListener: MovieClickListener) {
+        movieClickListener = clickListener
     }
 
 
@@ -76,5 +86,9 @@ class MoviesAdapter :
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val data = getItem(position)
         holder.bind(data)
+    }
+
+    interface MovieClickListener {
+        fun onMovieItemClicked(newItem: MovieResult)
     }
 }

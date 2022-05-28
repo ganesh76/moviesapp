@@ -1,6 +1,7 @@
 package com.ganeshgundu.moviesapp.view
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,11 +9,12 @@ import com.ganeshgundu.moviesapp.R
 import com.ganeshgundu.moviesapp.databinding.ActivityMainBinding
 import com.ganeshgundu.nasaapod.viewmodel.MoviesViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.ganeshgundu.moviesapp.api.MovieResult
 import com.ganeshgundu.moviesapp.app.MoviesApp
 import com.ganeshgundu.nasaapod.repository.MoviesRepository
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MoviesAdapter.MovieClickListener {
     private lateinit var viewModel : MoviesViewModel
     private lateinit var context: Context
     private lateinit var binding: ActivityMainBinding
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         context = this
         val adapter =  MoviesAdapter()
+        adapter.setClickListener(this);
         binding.moviesRecyclerView.adapter = adapter
         viewModel.getMovies()
         viewModel.responseData.observe(this,{
@@ -54,5 +57,11 @@ class MainActivity : AppCompatActivity() {
                 binding.statusProgressBar.visibility = View.GONE
             }
         })
+    }
+
+    override fun onMovieItemClicked(newItem: MovieResult) {
+        val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+        intent.putExtra("data", newItem)
+        startActivity(intent)
     }
 }
