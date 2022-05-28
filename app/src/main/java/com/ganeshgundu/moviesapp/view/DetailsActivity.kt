@@ -19,7 +19,9 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this
+
         var data = intent.getSerializableExtra("data") as MovieResult
+        getSupportActionBar()?.setTitle(data.title);
         binding.releaseDate.text = data.releaseDate
         binding.rating.text = data.voteAverage
         binding.popularity.text = data.popularity
